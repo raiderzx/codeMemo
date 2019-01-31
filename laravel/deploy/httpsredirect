@@ -1,0 +1,78 @@
+แก้ปัญหา url::asset ไม่วิ่งไปที่ https
+
+
+I had a problem with asset function when it's loaded resources through HTTP protocol when the website was using HTTPS, which is caused the "Mixed content" problem.
+
+To fix that you need to add \URL::forceScheme('https') into your AppServiceProvider file.
+
+So mine looks like this (Laravel 5.4):
+
+
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if(env('APP_ENV') == 'production') {
+            \URL::forceScheme('https');
+        }
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+}
+
+This is helpful when you need https only on server (env('APP_ENV') == 'production') and not locally, so don't need to force asset function to use https.
+*อย่าลืมแก้ .env หัวข้อ APP_ENV ให้เป็น production ด้วย
+
+หรือ
+
+secure_asset('assets/mdi/css/materialdesignicons.min.css')
+
+
+
+วิธีการแก้ด้วย .htaccess
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    
+RewriteEngine On 
+RewriteCond %{HTTPS} !=on
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+
+
+</IfModule>

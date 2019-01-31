@@ -1,5 +1,5 @@
 ปัญหา database 767 bytes
-แก้ไข AppServiceProvider.php
+แก้ไขไฟล์ AppServiceProvider.php
 
 use Illuminate\Support\Facades\Schema;
 
