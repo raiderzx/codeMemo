@@ -1,0 +1,52 @@
+#mac
+
+shortcut for composer
+nano .bash_profile
+
+export PATH="~/.composer/vendor/bin:$PATH"
+
+alias desk="cd /Users/anukul/Desktop"
+
+alias refbash="source ~/.bash_profile"
+
+alias bash="nano ~/.bash_profile"
+
+alias htdocs="cd /Applications/XAMPP/htdocs"
+
+alias htdocsau="cd /Applications/XAMPP/htdocs/au"
+
+alias composer="/Users/anukul/composer.phar"
+
+save
+
+#run this update
+composer update --no-scripts  
+
+chmod -R o+w storage
+
+clone from git
+- composer install (in project directory , will got .env.example)
+- php artisan key:generate
+- php artisan config:clear
+
+----------------------------------
+
+#windows
+
+windows
+- use .exe from web
+
+install laravel
+- composer global require "laravel/installer"
+
+create project
+- composer create-project laravel/laravel ...
+- ... is your folder name
+
+run project
+- cd to folder and type "php artisan serve"
+
+clone from git
+- composer install (in project directory , will got .env.example)
+- php artisan key:generate
+- php artisan config:clear

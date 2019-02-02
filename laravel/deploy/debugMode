@@ -1,0 +1,5 @@
+turn on debug mode
+
+config/app.php
+
+'debug' => env('APP_DEBUG', true),

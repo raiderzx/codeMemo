@@ -5,7 +5,7 @@ I had a problem with asset function when it's loaded resources through HTTP prot
 
 To fix that you need to add \URL::forceScheme('https') into your AppServiceProvider file.
 
-So mine looks like this (Laravel 5.4):
+So mine looks like this (Laravel 5.4)
 
 
 <?php
