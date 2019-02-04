@@ -1,0 +1,7 @@
+#install zip
+
+#centos
+yum install zip unzip php7.0-zip
+
+#ubuntu
+apt install zip unzip php7.0-zip

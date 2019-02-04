@@ -1,0 +1,12 @@
+# edit apache2 conf location
+/etc/apache2/apache2.conf
+
+#enable .htaccess by add this tag
+<Directory /var/www/html/public/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+#enable mod rewrite in server, function commandline.
+a2enmod rewrite

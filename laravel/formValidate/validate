@@ -1,0 +1,32 @@
+#new validate and return with old input
+
+#1
+$rules = [
+            'title' => 'required',
+            'compname' => 'required',
+            'complogo' => 'image',
+        ];
+
+        $customMessages = [
+            'title.required' => 'โปรดระบุหัวข้องาน',
+            'compname.required' => 'โปรดระบุชื่อบริษัท',
+            'complogo.image' => 'โปรดอัพโหลดภาพเป็นไฟล์นามสกุล png, jpg, bmp, gif, svg เท่านั้น',
+        ];
+
+        $this->validate($request, $rules, $customMessages)->withInput($request->all());
+
+
+#2
+$validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'compname' => 'required',
+            'complogo' => 'image',
+        ], [
+            'title.required' => 'โปรดระบุหัวข้องาน',
+            'compname.required' => 'โปรดระบุชื่อบริษัท',
+            'complogo.image' => 'โปรดอัพโหลดภาพเป็นไฟล์นามสกุล png, jpg, bmp, gif, svg เท่านั้น',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }

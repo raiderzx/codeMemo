@@ -1,0 +1,4 @@
+#if controller say it want class
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;

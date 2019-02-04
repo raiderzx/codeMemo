@@ -1,0 +1,2 @@
+#if error say want permission to cache in bootstrap/cache
+sudo chmod -R 775 bootstrap/cache/

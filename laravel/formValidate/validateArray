@@ -1,0 +1,12 @@
+# validate array
+# when title can have value dynamic
+
+$validator = Validator::make($request->all(), [
+            'title.*' => 'required',
+        ], [
+            'title.*.required' => 'โปรดระบุหัวข้อบทความ',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }

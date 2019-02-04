@@ -1,0 +1,59 @@
+First, let say in your hosting server (VPS, or shared hosting…whatever), you have current www/ directory, which is accessible publicly via web domain, for example:
+
+/Users/petehouston/www/
+
+Now, create a new directory, which contains all your application source code, at the same level as www/, for example:
+
+/Users/petehouston/project/
+
+You can use git, svn, mecurial or whatever method you like to transfer your code to this directory.
+At this point, you can see that the project code is apparently not accessible to the web, right?
+Next step is to copy all contents inside the /project/public directory to www/ directory. The easy example is that, with the fresh Laravel 5 installation application, the project/public/index.php should be copied to the www/index.php , have you got the point?
+Remember to copy the public/.htaccess to the www/ also. Don’t forget this, it is very important for your app routes. Without it, your routes won’t be working and there will be a blank or empty page in every route.
+Now let’s modify the www/index.php to reflect the new structure. Don’t modify the project/public/index.php, okay? Only modify www/index.php, remember this!!!
+
+Find the following line
+
+require __DIR__.’/../bootstrap/autoload.php’;
+$app = require_once __DIR__.’/../bootstrap/app.php’;
+
+And update them to the correct paths as following
+
+require __DIR__.’/../project/bootstrap/autoload.php’;
+$app = require_once __DIR__.’/../project/bootstrap/app.php’;
+
+It worths to mention that some shared hosting service providers allow symlink to the public_html directory of the main domain, we can simplify the process, instead of copying the whole project/public/ to /www, we create symbolic linking,
+
+ln -s /Users/petehouston/project/public /Users/petehouston/www
+
+Almost done, it is time to set permissions for the project/storage directory, it should be writable.
+
+$ chmod -R o+w project/storage
+
+The final step is here, config your application variables in the project/.env .
+All righty right! Everything should work now.
+If you don’t have composer installed already on your server, you can easily grab it to the project directory then.
+
+$ cd /User/petehouston/project/
+$ curl -sS https://getcomposer.org/installer | php — –filename=composer
+
+Now you can execute composer to manage dependencies.
+
+$ php composer install
+$ php composer dumpautoload -o
+$ php artisan config:cache
+$ php artisan route:cache
+
+From now on, each time you deploy, I mean you update the project/ directory, you will need to reflect all changes in project/public/ directory into www/, except the www/index.php, which is already configured above to include the correct paths.
+
+You can easily achieve this via bash shell command line. I wrote this little script sync.sh, you can use this by putting into the same directory level with project/ and www/
+
+$ pwd
+/Users/petehouston/project
+$ cd ..
+$ pwd
+/Users/petehouston
+$ ls
+project/ www/ sync.sh
+$ chmod +x sync.sh
+$ ./sync.sh

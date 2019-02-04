@@ -1,0 +1,24 @@
+# validate recaptcha
+
+$validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'tel' => 'required',
+            'email' => 'required',
+            'detail' => 'required',
+            'g-recaptcha-response' => ['required'],
+        ], [
+            'name.required' => 'โปรดระบุชื่อผู้ติดต่อ',
+            'tel.required' => 'โปรดระบุเบอร์โทรศัพท์ติดต่อกลับ',
+            'email.required' => 'โปรดระบุ email ของผู้ติดต่อ',
+            'detail.required' => 'โปรดระบุเนื้อหาที่จะติดต่อ',
+            'g-recaptcha-response.required' => 'โปรดกรุณาติ๊กถูกก่อนกดส่งข้อความ',
+            'g-recaptcha-response.captcha'  => 'Your custom validation message.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+
+
+//source: https://github.com/anhskohbo/no-captcha

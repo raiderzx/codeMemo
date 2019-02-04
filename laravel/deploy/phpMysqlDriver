@@ -1,0 +1,5 @@
+#edit php.ini
+edit pdo_mysql leave comment out
+
+#and install this if cannot find driver
+sudo apt-get install php-mysql

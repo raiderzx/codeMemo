@@ -1,0 +1,8 @@
+#if doesn't exist and has "s"
+
+#add public table in model
+
+class jobcat extends Model
+{
+    public $table = "jobcat";
+}

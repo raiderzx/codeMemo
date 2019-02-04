@@ -1,0 +1,9 @@
+#clone project
+git clone git@github.com:whatever folder-name
+
+#copy all in directory
+cp -a /source/. /dest/
+
+#delete folder and inside
+#lampp mean folder name
+rm -rf lampp
